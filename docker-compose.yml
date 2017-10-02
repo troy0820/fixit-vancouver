@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  fixit:
+    build: .
+    ports:
+     - ${PORT}
+    volumes:
+     - .:/var/www
+  proxy:
+    image: troy0820/nginx-proxy:latest
+    ports:
+      - "8888:80"

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>See Click fix it for Hampton Roads</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css.map">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="https://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/leaflet.markercluster-src.js"></script>
+</head>
+
+<body>
+    </style>
+    <div class="container">
+        <h1 class='text-capitalize'><i class="fa fa-wrench"></i> Fix it |
+            <%= title = title.split('-').join(' ') %>
+        </h1>
+
+        <h2>Vancouver</h2>
+        <a href="/" class="btn btn-info" role="button">Vancouver</a>
+        <hr/>
+        <h2 class='text-capitalize'>City of
+            <%= title %> Issues:
+                <%= start + 1%> -
+                    <%= start + list.length %>
+        </h2>
+        <!-- This is the pagination start -->
+        <% if (pages > 1 &&  list.length > 9) { console.log('pages',pages) %>
+            <a href='/<%= city %>/<%= next_page %>'>
+                <h4 class='text-capitalize'>Next Page</h4>
+            </a>
+            <% } else { %>
+                <a href='/<%=city%>/1'>
+                    <h4 class='text-capitalize'>
+                        <%= title %>
+                    </h4>
+                </a>
+                <% } console.log('next_page', next_page); %>
+                    <ul class="list-unstyled">
+                        <% if(list) {
+        list.map(function(_,i){ %>
+                            <li><b>Issue:#<%=[start+i+1] %></b></li>
+                            <li>Address:
+                                <%= list[i].address %>
+                            </li>
+                            <li>Status:
+                                <%= list[i].status %>
+                            </li>
+                            <li>Summary:
+                                <%= list[i].summary %>
+                            </li>
+                            <% if(list[i].description !="") { %>
+                                <li>Description:
+                                    <%= list[i].description %>
+                                </li>
+                                <% } %>
+                                    <hr>
+                                    <% } ) } %>
+                    </ul>
+                    <div id="map" style="height: 500px;">
+                        <script type="text/javascript">
+                            function success(r) {
+                                var a = r.coords,
+                                    e = L.marker([a.latitude, a.longitude], {
+                                        icon: redIcon
+                                    });
+                                e.bindPopup("Your location is here."), e.addTo(map)
+                            }
+
+                            function error(r) {
+                                console.warn("ERROR(" + r.code + "): " + r.message)
+                            }
+                            var RedIcon = L.Icon.Default.extend({
+                                    options: {
+                                        iconUrl: "/images/marker-icon-red.png"
+                                    }
+                                }),
+                                redIcon = new RedIcon,
+                                map = L.map("map").setView(["<%= list[0].lat %>", "<%= list[0].lng %>"], 11),
+                                options = {
+                                    enableHighAccuracy: !0,
+                                    timeout: 5e3,
+                                    maximumAge: 0
+                                };
+                            navigator.geolocation.getCurrentPosition(success, error, options), navigator.geolocation.watchPosition(success, error, options), L.tileLayer("https://a.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                                attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+                            }).addTo(map);
+                            var lngth = "<%= list.length %>",
+                                arr = [];
+                            art = [], summ = [], arr = "<%=lat.slice() %>", art = "<%=lng.slice() %>", summ = "<%= summary.slice() %>", addr = "<%= address.slice() %>";
+                            for (var summary = summ.split(","), array = arr.split(","), array2 = art.split(","), markers = new L.MarkerClusterGroup, i = 0; lngth > i; i++) {
+                                var marker = L.marker(new L.LatLng(array[i], array2[i]), {});
+                                L.circle([array[i], array2[i]]).setRadius(1609.34).addTo(map), marker.bindPopup("Summary: " + summary[i] + "<br/>"), markers.addLayer(marker)
+                            }
+                            map.addLayer(markers);
+                        </script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.map"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+                    </div>
+    </div>
+</body>
+
+</html>

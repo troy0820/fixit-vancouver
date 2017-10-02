@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: fixit-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  backend:
+    serviceName: default-http-backend
+    servicePort: 80
+  rules:
+   - http:
+       paths:
+       - path: /nginx
+         backend:
+           serviceName: nginx
+           servicePort: 80
+       - path: /fixit
+         backend:
+           serviceName: fixit
+           servicePort: 3000
