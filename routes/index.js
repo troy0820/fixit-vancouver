@@ -3,6 +3,9 @@ var router = express.Router();
 var request = require('request');
 var _ = require('lodash');
 
+router.get('/health', function(req, res) {
+        res.send('Good');
+});
 
 router.get('/', function(req, res) {
     var url = 'https://seeclickfix.com/api/v2/issues?place_url=can_vancouver&per_page=10&page=1'
@@ -116,3 +119,5 @@ router.get('/:city/:id', function(req, res) {
 
 
 module.exports = router;
+
+

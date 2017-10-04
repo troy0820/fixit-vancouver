@@ -1,4 +1,4 @@
-FROM node:6
+FROM node:6-alpine
 
 COPY package.json /tmp/package.json
 
@@ -14,6 +14,6 @@ EXPOSE 3000
 
 VOLUME /var/www 
 
-# HEALTHCHECK --interval=5s --timeout=3s --retries=5 CMD curl -f http://localhost:3000/health || exit 1
+HEALTHCHECK --interval=5s --timeout=3s --retries=5 CMD curl -f http://localhost:3000/health || exit 1
 
 ENTRYPOINT  ["npm", "start"]
