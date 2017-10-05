@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fixit-vancouver-config
+  labels:
+    app: fixit
+data:
+  PORT: "3000"
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -30,6 +39,9 @@ spec:
       containers:
       - image: troy0820/fix-vancouver:v3
         imagePullPolicy: Never
+        envFrom:
+          - configMapRef:
+              name: fixit-vancouver-config
         livenessProbe:
           failureThreshold: 3
           httpGet:
@@ -60,3 +72,7 @@ spec:
       restartPolicy: Always
       securityContext: {}
       terminationGracePeriodSeconds: 30
+
+
+
+
