@@ -18,7 +18,7 @@
         "ejs": "^2.3.4",
         "express": "^4.13.3",
         "geocoder": "^0.2.2",
-        "lodash": "^3.5.0",
+        "lodash": "^4.17.19",
         "morgan": "^1.6.1",
         "request": "^2.67.0",
         "serve-favicon": "^2.3.0",
